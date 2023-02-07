@@ -7,7 +7,10 @@ let obj = {
             'first' : 'Manish',
             'last' : 'Kumar'
         },
-        'address' : ['mahadevpura','c v raman road']
+        'address' : ['mahadevpura',{"new Address" : {
+            "roadName" : "c v raman",
+            "flatNumber" : '101'
+        }}]
     },
     'experience' : ['policybazaar.com', 'freshworks', {'firstOrg' : 'policybazaar.com', 'secondOrg' : 'freshworks'}]
 }
@@ -28,4 +31,61 @@ let flatObj = (obj) => {   //
     return result;
 }
 
-console.log(flatObj(obj, ''));
+
+let flatObjWithoutInnerFor = (obj, prefix = '', result = {}) => {   // 
+    for(let key in obj) {
+        let newKey = prefix ? `${prefix}.${key}` :  key;
+        if(typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+            flatObjWithoutInnerFor(obj[key], newKey, result);
+        } else {
+            result[newKey] = obj[key];  
+        }
+    }
+
+    return result;
+}
+
+// console.log(flatObj(obj));
+// console.log(flatObjWithoutInnerFor(obj, '', {}));
+
+
+let flatAnObj = ( obj, newKey = '') => {
+
+    let result = {};
+
+    for(let key in obj){
+        // Array
+        let val = obj[key];
+        if(Array.isArray(obj[key])) {
+            let copiedArr = [];
+            for( let i = 0; i < val.length; i++) {
+                if(typeof val[i] === 'object') {
+                    let flatObject = flatAnObj(val[i]);
+                    let newObj = {};
+                    for(let flatkey in flatObject) {
+                        newObj[flatkey] = flatObject[flatkey];
+                    }
+                    copiedArr[i] = newObj;
+
+                } else {
+                    copiedArr[i] = val[i];
+                }
+            }
+            
+            result[key] = copiedArr;
+
+        } else if( typeof obj[key] === 'object' ) {
+            let flatObj = flatAnObj(obj[key],newKey+key+'.');
+            for(let flatkey in flatObj) {
+                result[flatkey] = flatObj[flatkey];
+            }
+        } else {
+            result[newKey+key] = obj[key];
+        }
+    }
+    
+    return result;
+
+}
+
+console.log(flatAnObj(obj,'',{}));

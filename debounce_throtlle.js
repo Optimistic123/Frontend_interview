@@ -6,7 +6,6 @@ let debounce = (fn, delay) => {
     let timer;
 
     return (...args) => {
-        // console.log("timer: ", timer);
         clearTimeout(timer);
         timer = setTimeout(() => {
             fn(args);
