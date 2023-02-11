@@ -20,7 +20,7 @@ function deepClone(inp) {
 }
 
 let obj = {
-    'experience' : ['policybazaar.com', 'freshworks', {'firstOrg' : 'policybazaar.com', 'secondOrg' : 'freshworks'}],
+    'experience' : ['policybazaar.com', 'freshworks', {'firstOrg' : 'policybazaar.com', 'secondOrg' : {'orgName': 'freshworks', 'teamName':'Tech Team Trans'}}],
     'person' : {
         'age' : 25,
         'name' : {

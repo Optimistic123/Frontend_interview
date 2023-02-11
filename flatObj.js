@@ -12,7 +12,7 @@ let obj = {
             "flatNumber" : '101'
         }}]
     },
-    'experience' : ['policybazaar.com', 'freshworks', {'firstOrg' : 'policybazaar.com', 'secondOrg' : 'freshworks'}]
+    'experience' : ['policybazaar.com', 'freshworks', {'firstOrg' : 'policybazaar.com', 'secondOrg' : {'orgName': 'freshworks', 'teamName': 'TTO'}}]
 }
 
 let flatObj = (obj) => {   // 
