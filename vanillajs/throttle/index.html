@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Throttle</title>
+</head>
+
+<body>
+    <h1>Throttle task</h1>
+    <input id="input-array"></input>
+    <button id="start-throttle">Throttle</button>
+    <script>
+        // function throttle(array, limit, delay, callback) {
+        //     let timerId;
+        //     let lastRun;
+        //     const queue = [...array];
+        //     return () => {                
+        //         if(!lastRun) {
+        //             const currnetElem = queue.splice(0, limit);
+        //             callback(currnetElem);
+        //             lastRun = Date.now();
+        //         } else {
+        //             clearTimeout(timerId);
+
+        //             timerId = setTimeout(() => {
+        //                 if(Date.now() - lastRun >= delay) {
+        //                     const currnetElem = queue.splice(0, limit);
+        //                     callback(currnetElem);
+        //                     lastRun = Date.now();
+        //                 }
+        //             }, delay - (Date.now() - lastRun));
+        //         }
+        //     }
+        // };
+
+        // document.getElementById("start-throttle").addEventListener('click', () => {
+        //     let throlledFunc = throttle([10,20,30,40,50,60,70,80], 2, 1000, (task) => {
+        //         console.log(task);
+        //     });
+        //     throlledFunc();
+        // });
+
+        
+        
+        function throttle(array, limit, delay, callback) {
+            let timerId;
+            let lastRun;
+            const queue = [...array];
+
+            return () => {
+                if (!lastRun) {
+                    const currentElem = queue.splice(0, limit);
+                    callback(currentElem);
+                    lastRun = Date.now();
+                } else {
+                    clearTimeout(timerId);
+
+                    timerId = setTimeout(() => {
+                        if (Date.now() - lastRun >= delay) {
+                            const currentElem = queue.splice(0, limit);
+                            callback(currentElem);
+                            lastRun = Date.now();
+                        }
+                    }, delay - (Date.now() - lastRun));
+                }
+            };
+        }
+
+        // Create the throttled function outside the event listener
+        const throttledFunc = throttle([10, 20, 30, 40, 50, 60, 70, 80], 2, 1000, (task) => {
+            console.log(task);
+        });
+
+        document.getElementById("start-throttle").addEventListener('click', () => {
+            throttledFunc();
+        });
+
+
+        document.getElementById("input-array").addEventListener('change', (e) => {
+            const numArray = e.target.value.split(',');
+            console.log(numArray);
+        });
+    </script>
+</body>
+
+</html>
