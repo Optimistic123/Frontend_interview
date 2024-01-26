@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infinite scroll</title>
+  </head>
+  <body>
+    <main id="wrapper"></main>
+
+    <script>
+      let contentWrapper = document.getElementById("wrapper");
+
+      let elements = [];
+      let count = 50;
+      for (let i = 1; i <= count; i++) {
+        let childContent = document.createElement("div");
+        childContent.textContent = i;
+        childContent.classList.add(`child${i}`);
+        childContent.classList.add(`child`);
+        elements.push(childContent);
+      }
+
+      // Append each element individually
+      elements.forEach((element) => {
+        contentWrapper.appendChild(element);
+      });
+
+      // Function to add more elements when the last child is intersecting
+      function addMoreElements(entries, observer) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            count += 50;
+
+            for (let i = count - 49; i <= count; i++) {
+              let childContent = document.createElement("div");
+              childContent.textContent = i;
+              childContent.classList.add(`child${i}`);
+              childContent.classList.add(`child`);
+              elements.push(childContent);
+              contentWrapper.appendChild(childContent);
+            }
+
+            // Remove the old observer
+            observer.disconnect();
+
+            // Create a new observer for the new last child
+            const newObserver = new IntersectionObserver(
+              addMoreElements,
+              { threshold: 0.2 }
+            );
+            newObserver.observe(elements[elements.length - 1]);
+          }
+        });
+      }
+
+      // Create an observer for the initial last child
+      const observer = new IntersectionObserver(addMoreElements, {
+        threshold: 0.2,
+      });
+      observer.observe(elements[elements.length - 1]);
+    </script>
+  </body>
+</html>

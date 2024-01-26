@@ -35,10 +35,10 @@ const obj = {
 let Obj = {
     name : "Manish Kumar",
     normal(){
-        console.log(`This is normal function defined inside obj : ${this,this.name}`)
+        console.log(`This is normal function defined inside obj : ${this,this.name}`);
     },
     arrow : () => {
-        console.log(`Arrow function don't have their own this , laxical scope : ${this,this.name}`)
+        console.log(`Arrow function don't have their own this , laxical scope : ${this,this.name}`);
     }
 }
 
@@ -51,9 +51,9 @@ const arrowFunGlobal = () => {
   console.log(`This in winodw function from arrow func: ${this}, ${this.name}`);
 };
 
-Obj.normal();
+// Obj.normal();
 Obj.arrow();
-Test();
-arrowFunGlobal();
+// Test();
+// arrowFunGlobal();
 
 

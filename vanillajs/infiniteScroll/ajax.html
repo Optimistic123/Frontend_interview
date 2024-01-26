@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infinite Scroll</title>
+  </head>
+  <body>
+    <main id="wrapper"></main>
+
+    <script>
+      let contentWrapper = document.getElementById("wrapper");
+      let count = 50;
+
+      function fetchData(start, end) {
+        for (let i = start; i <= end; i++) {
+          let childContent = document.createElement("div");
+          childContent.textContent = i;
+          childContent.classList.add(`child${i}`);
+          childContent.classList.add(`child`);
+          contentWrapper.appendChild(childContent);
+        }
+      }
+
+      function handleScroll() {
+        if (
+          window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 20
+        ) {
+          const start = count + 1;
+          count += 50;
+          const end = count;
+          fetchData(start, end);
+        }
+      }
+
+      // Attach the handleScroll function to the scroll event on the window
+      window.addEventListener("scroll", handleScroll);
+
+      // Initial data load
+      fetchData(1, count);
+    </script>
+  </body>
+</html>
