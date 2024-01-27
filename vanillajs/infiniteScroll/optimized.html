@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite scroll</title>
+</head>
+<body>
+    <main id="content-wrapper"></main>
+    <script>
+        const contentWrapper = document.getElementById("content-wrapper");
+
+        let requestCount = 50;
+        const elem = [];
+
+        function createChild(i) {
+            let childNode = document.createElement('div');
+            childNode.classList.add(`child-${i}`);
+            childNode.textContent=i
+            contentWrapper.appendChild(childNode);
+            elem.push(childNode);
+        }
+
+        //aapend child to wrapper div
+        for(let i = 1; i<=requestCount; i++) {
+            createChild(i);
+        }
+
+
+        function callback(entries, observer) {
+            entries.forEach(element => {
+                if(element.isIntersecting) {
+                    console.log(`Element ${element.target.className} is visible`);
+
+                    //unobserve the elem we have seen 
+                    observer.unobserve(elem[elem.length -1]);
+
+                    //add new elem on show
+                    requestCount += 50;
+                    for(let i = requestCount-49; i <= requestCount ; i++) {
+                        createChild(i);
+                    }
+
+                    //update the observer
+                    console.log(`Element count ${elem.length} is visible`);
+                    observer.observe(elem[elem.length -1]);
+                }
+            });
+        }
+
+        //intersection observer
+        const observer = new IntersectionObserver(callback);
+        observer.observe(elem[elem.length -1]);
+
+
+
+        // ?Note: we can avoid elem storing using :> contentWrapper.lastElementChild
+    </script>
+</body>
+</html>
