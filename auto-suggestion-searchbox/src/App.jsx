@@ -44,6 +44,7 @@ function App() {
         customErrorMessage={"Something went wrong"}
         showError={showError}
         setShowError={setShowError}
+        multipleSelect={true}
       />
     </>
   )
