@@ -4,6 +4,7 @@ import AutoSuggestion from './AutoSuggestion';
 
 function App() {
   const [suggestionList, setSuggestionList] = useState([]);
+  const [showError, setShowError] = useState(false);
 
   const getData = async (value) => {
     if(!value.length) {
@@ -12,11 +13,11 @@ function App() {
     };
 
     try{
-      const response = await fetch(`https://swapi.dev/api/planets/?search=${encodeURIComponent(value)}`);
+      const response = await fetch(`https://swapi.dev/api/people/?search=${encodeURIComponent(value)}`);
       const data = await response.json();
       setSuggestionList(data.results);
     } catch (err) {
-      console.error(err);
+      setShowError(true);
       setSuggestionList([]);
     }
   }
@@ -32,14 +33,17 @@ function App() {
     }
   }
 
-  const callApi = debounce(getData, 5000);
-  
+  const callApi = debounce(getData, 400);
+
   return (
     <>
       <AutoSuggestion 
         getData = {callApi}
         suggestionList= {suggestionList}
-        showSuggestion={true}
+        showSuggestion={suggestionList.length > 0}
+        customErrorMessage={"Something went wrong"}
+        showError={showError}
+        setShowError={setShowError}
       />
     </>
   )
