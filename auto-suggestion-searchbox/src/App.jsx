@@ -4,18 +4,21 @@ import AutoSuggestion from './AutoSuggestion';
 
 function App() {
   const [suggestionList, setSuggestionList] = useState([]);
-  const getData = (value) => {
-    console.log(value);
+
+  const getData = async (value) => {
     if(!value.length) {
       setSuggestionList([]);
       return;
     };
 
-    //api call : https://swapi.dev/api/people/?search=r2
-    fetch(`https://swapi.dev/api/planets/?search=${encodeURIComponent(value)}`)
-    .then(res => res.json())
-    .then(data => setSuggestionList(data.results))
-    .catch(err => console.error(err))
+    try{
+      const response = await fetch(`https://swapi.dev/api/planets/?search=${encodeURIComponent(value)}`);
+      const data = await response.json();
+      setSuggestionList(data.results);
+    } catch (err) {
+      console.error(err);
+      setSuggestionList([]);
+    }
   }
 
   const debounce = (callback, delay) => {
@@ -30,6 +33,7 @@ function App() {
   }
 
   const callApi = debounce(getData, 5000);
+  
   return (
     <>
       <AutoSuggestion 
