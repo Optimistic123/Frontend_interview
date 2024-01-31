@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 96vh; /* This will make sure it takes the full height of the viewport */
+}
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(3, 50px); /* Adjust the width of the columns as needed */
+  grid-gap: 1px; /* Adjust the gap between the boxes as needed */
+}
+
+.box {
+  width: 50px; /* Adjust the width of each box as needed */
+  height: 50px; /* Adjust the height of each box as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.box:disabled {
+  cursor: not-allowed;
+  background-color: #f2f2f2;
+}
