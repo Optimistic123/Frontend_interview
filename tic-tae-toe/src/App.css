@@ -1,7 +1,4 @@
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 96vh; /* This will make sure it takes the full height of the viewport */
 }
 
@@ -23,5 +20,13 @@
 
 .box:disabled {
   cursor: not-allowed;
-  background-color: #f2f2f2;
+  background-color: #cfb10a;
+}
+
+.starting-symbol-hide {
+  display: none;
+}
+
+.starting-symbol-show {
+  display: block;
 }
