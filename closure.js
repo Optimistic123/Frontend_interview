@@ -5,6 +5,13 @@
 
 // ? example : [debounce, throttle, memoization, currying ...]
 
+
+// ! NOTE: write in this way
+  /**
+   * 1.'callbacks can access `this`
+   * 2. uses arguments of latest invocation
+   */
+    
 // TODO [Debounce]
 
 const debounce = (callback, delay) => {
@@ -13,7 +20,7 @@ const debounce = (callback, delay) => {
   return (...args) => {
     clearTimeout(timerId);
     timerId = setTimeout(() => {
-      callback(...args);
+      callback.apply(this, args);
     }, delay);
   };
 };
@@ -26,13 +33,15 @@ const throttle = (callback, delay) => {
 
   return (...args) => {
     if (!lastRun) {
-      callback(...args);
+      // callback.call(this, ...args);   // call tahe args as elem not list so destructure
+      callback.apply(this, args);     // apply take args as list so no destructure
       lastRun = Date.now();
     } else {
       timerId = setTimeout(() => {
         if (Date.now() - lastRun > delay) {
           clearTimeout(timerId);
-          callback(...args);
+          // callback.call(this, ...args);
+          callback.apply(this, args);
           lastRun = Date.now();
         }
       }, delay - (Date.now() - lastRun));
