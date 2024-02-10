@@ -77,3 +77,26 @@ bindedFun("MAMIHS", "SHAJ");
 
 // let bindedFun = greet.customBind(user);
 // bindedFun("manish", "sdsf"); // Output: Hello !!! John
+
+// ? in above customBind function have two definition one with arrow function and one with normal function [which works well and why?]
+
+// TODO : Promise.allSettled
+function cutomPromiseAllSettled (promises) {
+    return new Promise((resolve, reject) => {
+        const resultPromise = [];
+        let settledPromiseCount = 0;
+        promises.forEach((promise, index) => {
+            promise.then((result) => {
+                resultPromise[index] = res;
+            }).catch((err) => {
+                resultPromise[index] = res;
+            }).finally(() => {
+                settledPromiseCount++;
+                if(settledPromiseCount == promises.length) {
+                    resolve(resultPromise);
+                }
+            })
+        });
+        
+    });
+}
