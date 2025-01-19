@@ -1,6 +1,9 @@
 const first = {
   name: "John",
   itmeList: ["1", "2", "3"],
+  nestedObj: {
+    n1: "n1 value"
+  }
 };
 
 const second = {
@@ -9,15 +12,18 @@ const second = {
 };
 
 const third = first;
-console.log(first === second);
-console.log(first === third);
+
+third.nestedObj.n1 = "name chnaged"
+// console.log(first === second);
+// console.log(first === third);
+// console.log(first, third);
 
 // 2
-for (var i = 0; i < 4; i++) {
-  setTimeout(() => {
-    console.log(i);
-  }, 0);
-}
+// for (var i = 0; i < 4; i++) {
+//   setTimeout(() => {
+//     console.log(i);
+//   }, 0);
+// }
 
 // 3
 for (var i = 0; i < 4; i++) {
