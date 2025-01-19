@@ -67,5 +67,5 @@ const result = formatDate(
 );
 
 if (isBusinessDay(date) && !isHoliday(date)) {
-  // Do something
+  // Do something test
 }
